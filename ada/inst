@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if ! ((`lsmod | grep i2c-bcm2708 | wc -l`))
+  then 
+    modprobe i2c-bcm2708
+  fi
+if ! ((`lsmod | grep gpio-mcp23s08 | wc -l`))
+  then 
+    modprobe gpio-mcp23s08
+  fi
+
+if ((`lsmod | grep ada | wc -l`))
+  then 
+    rmmod ada
+  fi
+insmod ada.ko
+if ((`ls /dev | grep adalcd | wc -l`))
+  then 
+    chmod 666 /dev/adalcd
+  fi
+if ((`ls /dev | grep adabut | wc -l`))
+  then 
+    chmod 666 /dev/adabut
+  fi
+
